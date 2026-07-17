@@ -164,7 +164,7 @@ You can customize the base movement speed, fast movement multiplier, mouse sensi
 goodnavigate.enable(
     speed=2.0,
     fast_mult=3.0,
-    sense=0.2,
+    sense=1.0,
     speed_mult=1.0,
     height_lock=True,
     check_window_focus=True,
@@ -177,6 +177,8 @@ Disable the speed overlay if needed:
 goodnavigate.enable(show_speed_overlay=False)
 ```
 
+Mouse sensitivity uses a normalized scale. `sense=1.0` is the standard mouse sensitivity and maps to the previous internal value `0.1`.
+
 Runtime setters:
 
 ```python
@@ -184,7 +186,7 @@ navigator = goodnavigate.enable()
 
 navigator.set_speed(3.0)
 navigator.set_fast_mult(4.0)
-navigator.set_sense(0.15)
+navigator.set_sense(1.0)
 navigator.set_speed_mult(2.0)
 navigator.reset_speed_mult()
 ```

@@ -22,7 +22,8 @@ import vizact
 
 DEFAULT_SPEED = 2.0
 DEFAULT_FAST_MULT = 3.0
-DEFAULT_SENSE = 0.2
+DEFAULT_SENSE = 1.0
+MOUSE_SENSE_SCALE = 0.1
 DEFAULT_SPEED_MULT = 1.0
 MIN_SPEED_MULT = 0.25
 MAX_SPEED_MULT = 5.0
@@ -300,10 +301,10 @@ class CameraNavigator(object):
             return
 
         yaw, pitch, roll = self.view.getEuler()
-        yaw += event.dx * self.sense
+        yaw += event.dx * self.sense * MOUSE_SENSE_SCALE
 
         if self.active_button == viz.MOUSEBUTTON_RIGHT:
-            pitch = max(-89.0, min(89.0, pitch - event.dy * self.sense))
+            pitch = max(-89.0, min(89.0, pitch - event.dy * self.sense * MOUSE_SENSE_SCALE))
 
         self.view.setEuler([yaw, pitch, roll])
 
