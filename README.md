@@ -1,9 +1,9 @@
-﻿# GoodNavigate
+# GoodNavigate
 
-GoodNavigate is a small camera navigation helper module for **WorldViz Vizard 8**.
+GoodNavigate is a camera navigation helper package for **WorldViz Vizard 8**.
 It adds comfortable editor-style camera controls to a Vizard scene with one call.
 
-This module depends on Vizard's `viz` and `vizact` modules, so it is intended to run inside a Vizard 8 Python environment. It is not a standalone Python camera library.
+This package depends on Vizard's `viz` and `vizact` modules, so it is intended to run inside a Vizard 8 Python environment. It is not a standalone Python camera library.
 
 ## Features
 
@@ -17,32 +17,50 @@ This module depends on Vizard's `viz` and `vizact` modules, so it is intended to
 - Rounded gray overlay background
 - No automatic `viz.go()` when imported
 
-## Files
+## Installation
 
-Upload these files together:
+Install it into the Python environment used by Vizard 8.
 
-```text
-GoodNavigate.py
-goodnavigate_overlay_bg.png
-README.md
+```powershell
+python -m pip install git+https://github.com/cuber244/goodnavigate.git
 ```
 
-`goodnavigate_overlay_bg.png` is used for the rounded gray speed overlay background.
+If `python` is not Vizard's Python, run pip through the Vizard Python executable instead. The exact path depends on your PC, but the command will look like this:
+
+```powershell
+"C:\Path\To\Vizard8\python.exe" -m pip install git+https://github.com/cuber244/goodnavigate.git
+```
+
+After updating the GitHub repository, upgrade an existing installation with:
+
+```powershell
+python -m pip install --upgrade git+https://github.com/cuber244/goodnavigate.git
+```
 
 ## Basic Usage
 
-Place `GoodNavigate.py` and `goodnavigate_overlay_bg.png` in the same folder as your Vizard script.
+Use the lowercase package name for new Vizard scripts.
+
+```python
+import viz
+import goodnavigate
+
+viz.go()
+
+goodnavigate.enable()
+```
+
+Importing `goodnavigate` does not start Vizard and does not add scene objects. Call `goodnavigate.enable()` after `viz.go()` in the script that owns the scene.
+
+For compatibility, `import GoodNavigate` is also included after pip installation:
 
 ```python
 import viz
 import GoodNavigate
 
 viz.go()
-
 GoodNavigate.enable()
 ```
-
-Importing `GoodNavigate` does not start Vizard and does not add scene objects. Call `GoodNavigate.enable()` after `viz.go()` in the script that owns the scene.
 
 ## Controls
 
@@ -73,7 +91,7 @@ When the speed changes, or when the user scrolls at the minimum/maximum limit, t
 You can customize the base movement speed, fast movement multiplier, mouse sensitivity, and initial speed multiplier.
 
 ```python
-GoodNavigate.enable(
+goodnavigate.enable(
     speed=2.0,
     fast_mult=3.0,
     sense=0.2,
@@ -84,13 +102,13 @@ GoodNavigate.enable(
 Disable the speed overlay if needed:
 
 ```python
-GoodNavigate.enable(show_speed_overlay=False)
+goodnavigate.enable(show_speed_overlay=False)
 ```
 
 Get or set the current speed multiplier:
 
 ```python
-navigator = GoodNavigate.enable()
+navigator = goodnavigate.enable()
 
 current = navigator.get_speed_mult()
 navigator.set_speed_mult(2.0)
@@ -99,7 +117,7 @@ navigator.set_speed_mult(2.0)
 Temporarily disable controls:
 
 ```python
-GoodNavigate.disable()
+goodnavigate.disable()
 ```
 
 ## Using A Different View
@@ -108,48 +126,27 @@ By default, GoodNavigate controls `viz.MainView`. You can pass another Vizard vi
 
 ```python
 my_view = viz.MainView
-GoodNavigate.enable(view=my_view)
+goodnavigate.enable(view=my_view)
 ```
 
-## Demo Mode
-
-You can also run `GoodNavigate.py` directly. In that case only, it starts Vizard and adds `ground.osgb` for a simple test scene.
-
-```python
-python GoodNavigate.py
-```
-
-In normal projects, import it from your own Vizard script instead.
-
-## Notes For GitHub / pip Packaging
-
-Recommended repository name:
+## Repository Layout
 
 ```text
-goodnavigate
+pyproject.toml
+README.md
+src/
+  goodnavigate/
+    __init__.py
+    goodnavigate_overlay_bg.png
+  GoodNavigate.py
 ```
 
-This first version can be distributed by copying `GoodNavigate.py` and `goodnavigate_overlay_bg.png` into a Vizard project folder.
+`src/goodnavigate/goodnavigate_overlay_bg.png` is packaged with the module and is used for the rounded gray speed overlay background.
 
-For future pip packaging, the import name should ideally be changed to lowercase, for example:
-
-```python
-import goodnavigate
-
-goodnavigate.enable()
-```
-
-Until then, use:
-
-```python
-import GoodNavigate
-```
+The root-level `GoodNavigate.py` file can still be copied directly into a Vizard project if you want a no-pip workflow, but pip users should use the `src/` package.
 
 ## Requirements
 
 - WorldViz Vizard 8
 - Vizard Python environment with `viz` and `vizact`
-
-## License
-
-Add a license file before public release if you want others to reuse or modify this module clearly.
+- pip available in the Vizard Python environment

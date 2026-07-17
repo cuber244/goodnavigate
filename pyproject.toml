@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "goodnavigate"
+version = "0.1.0"
+description = "Comfortable camera navigation helper for WorldViz Vizard 8"
+readme = "README.md"
+requires-python = ">=3.7"
+authors = [
+  { name = "cuber244" }
+]
+keywords = ["vizard", "worldviz", "camera", "navigation", "vr"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Topic :: Multimedia :: Graphics :: 3D Rendering",
+]
+
+[project.urls]
+Homepage = "https://github.com/cuber244/goodnavigate"
+Repository = "https://github.com/cuber244/goodnavigate"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+py-modules = ["GoodNavigate"]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+goodnavigate = ["goodnavigate_overlay_bg.png"]
